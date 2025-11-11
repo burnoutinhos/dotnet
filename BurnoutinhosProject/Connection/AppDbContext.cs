@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.Mappings;
+using BurnoutinhosProject.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BurnoutinhosProject.Connection
@@ -19,7 +20,12 @@ namespace BurnoutinhosProject.Connection
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new TimeBlockMapper());
+            modelBuilder.ApplyConfiguration(new NotificationMapper());
+            modelBuilder.ApplyConfiguration(new AnalyticsMapper());
+            modelBuilder.ApplyConfiguration(new SuggestionMapper());
+            modelBuilder.ApplyConfiguration(new UserMapper());
+            modelBuilder.ApplyConfiguration(new TodoMapper());
         }
 
     }
