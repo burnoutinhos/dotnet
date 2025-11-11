@@ -1,4 +1,6 @@
 using BurnoutinhosProject.Connection;
+using BurnoutinhosProject.Repository;
+using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +20,24 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddScoped<AnalyticsRepository>();
+builder.Services.AddScoped<NotificationRepository>();
+builder.Services.AddScoped<SuggestionRepository>();
+builder.Services.AddScoped<TimeBlockRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<TodoRepository>();
+
+builder.Services.AddScoped<AnalyticsService>();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<SuggestionService>();
+builder.Services.AddScoped<TimeBlockService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TodoService>();
+
+
+
 var app = builder.Build();
+
 
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
