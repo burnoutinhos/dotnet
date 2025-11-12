@@ -1,5 +1,6 @@
 ﻿using BurnoutinhosProject.DTO;
 using BurnoutinhosProject.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BurnoutinhosProject.Controllers
@@ -16,6 +17,7 @@ namespace BurnoutinhosProject.Controllers
             _tokenService = tokenService;
         }
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginUser)
         {
             var user = await _userService.GetAllUsersAsync();
