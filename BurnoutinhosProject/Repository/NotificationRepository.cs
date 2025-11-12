@@ -21,6 +21,11 @@ namespace BurnoutinhosProject.Repository
             return await _context.Notification.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Notification>> GetByUserIdAsync(int userId)
+        {
+            return await _context.Notification.Where(n => n.UserId == userId).ToListAsync();
+        }
+
         public async Task<Notification> AddAsync(Notification notification)
         {
             _context.Notification.Add(notification);

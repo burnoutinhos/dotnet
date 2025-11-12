@@ -32,6 +32,17 @@ namespace BurnoutinhosProject.Mappings
                 .HasColumnName("type");
             builder.Property(t => t.IdSugestion)
                 .HasColumnName("id_suggestion");
+            builder.HasOne<Todo>()
+                .WithMany()
+                .HasForeignKey(t => t.IdSugestion)
+                .HasConstraintName("sugestao_todo");
+            builder.Property(t => t.UserId)
+                .IsRequired()
+                .HasColumnName("user_id");
+            builder.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(u => u.UserId)
+                .HasConstraintName("usuario_todo");
             builder.Property(t => t.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired()

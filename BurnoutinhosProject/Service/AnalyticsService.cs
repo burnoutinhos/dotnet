@@ -18,6 +18,11 @@ namespace BurnoutinhosProject.Service
             return await _analyticsRepository.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Analytics>> GetByUserIdAsync(int userId)
+        {
+            return await _analyticsRepository.GetByUserIdAsync(userId);
+        }
+
         public async Task<Analytics?> GetByIdAsync(int id)
         {
             return await _analyticsRepository.GetByIdAsync(id);

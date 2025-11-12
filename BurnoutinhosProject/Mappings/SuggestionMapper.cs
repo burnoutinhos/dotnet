@@ -17,6 +17,13 @@ namespace BurnoutinhosProject.Mappings
             builder.Property(s => s.SuggestionDescription)
                 .HasColumnName("suggestion")
                 .IsRequired();
+            builder.Property(s => s.UserId)
+                .HasColumnName("user_id")
+                .IsRequired();
+            builder.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
             builder.Property(s => s.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired();

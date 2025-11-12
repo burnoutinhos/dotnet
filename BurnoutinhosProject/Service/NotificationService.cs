@@ -17,6 +17,11 @@ namespace BurnoutinhosProject.Service
             return await _notificationRepository.GetAllAsync();
         }
 
+        public async Task<IEnumerable<Notification>> GetNotificationsByUserIdAsync(int userId)
+        {
+            return await _notificationRepository.GetByUserIdAsync(userId);
+        }
+
         public async Task<Notification?> GetNotificationByIdAsync(int id)
         {
             return await _notificationRepository.GetByIdAsync(id);

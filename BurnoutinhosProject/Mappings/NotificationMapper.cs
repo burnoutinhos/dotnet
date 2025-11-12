@@ -14,12 +14,12 @@ namespace BurnoutinhosProject.Mappings
                 .ValueGeneratedOnAdd()
                 .IsRequired()
                 .HasColumnName("id");
-            builder.Property(n => n.TaskId)
+            builder.Property(n => n.UserId)
                 .HasColumnName("task_id")
                 .IsRequired();
-            builder.HasOne<Todo>()
+            builder.HasOne<User>()
                 .WithMany()
-                .HasForeignKey(n => n.TaskId)
+                .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Property(n => n.Message)
                 .IsRequired();

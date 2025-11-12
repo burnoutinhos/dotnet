@@ -23,6 +23,11 @@ namespace BurnoutinhosProject.Repository
             return await _context.Analytics.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Analytics>> GetByUserIdAsync(int userId)
+        {
+            return await _context.Analytics.Where(a => a.UserId == userId).ToListAsync();
+        }
+
         public async Task<Analytics> AddAsync(Analytics analytics)
         {
             _context.Analytics.Add(analytics);

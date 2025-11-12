@@ -21,6 +21,10 @@ namespace BurnoutinhosProject.Service
         {
             return await _todoRepository.GetByIdAsync(id);
         }
+        public async Task<IEnumerable<Todo>> GetTodosByUserIdAsync(int userId)
+        {
+            return await _todoRepository.GetByUserIdAsync(userId);
+        }
         public async Task<Todo> CreateTodoAsync(Todo todo)
         {
             return await _todoRepository.AddAsync(todo);

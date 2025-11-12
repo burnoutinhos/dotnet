@@ -24,6 +24,11 @@ namespace BurnoutinhosProject.Repository
             return await _context.Todo.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Todo>> GetByUserIdAsync(int userId)
+        {
+            return await _context.Todo.Where(t => t.UserId == userId).ToListAsync();
+        }
+
         public async Task<Todo> AddAsync(Todo todo)
         {
             _context.Todo.Add(todo);

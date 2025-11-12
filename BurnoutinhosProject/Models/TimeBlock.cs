@@ -11,7 +11,7 @@ namespace BurnoutinhosProject.Models
 
         public TypeTimeEnum TypeTime{ get; set; }
 
-        public int? TodoId { get; set; }
+        public int? UserId { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

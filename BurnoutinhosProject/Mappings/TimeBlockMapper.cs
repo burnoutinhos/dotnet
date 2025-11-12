@@ -22,11 +22,11 @@ namespace BurnoutinhosProject.Mappings
             builder.Property(tb => tb.TypeTime)
                 .IsRequired()
                 .HasColumnName("type_time");
-            builder.Property(tb => tb.TodoId)
+            builder.Property(tb => tb.UserId)
                 .HasColumnName("todo_id");
-            builder.HasOne<Todo>()
+            builder.HasOne<User>()
                 .WithMany()
-                .HasForeignKey(tb => tb.TodoId)
+                .HasForeignKey(tb => tb.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
             builder.Property(tb => tb.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
