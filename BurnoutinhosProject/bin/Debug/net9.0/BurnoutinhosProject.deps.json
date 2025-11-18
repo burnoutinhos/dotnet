@@ -775,17 +775,17 @@
           "runtimes/win-arm64/native/LdaNative.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/LdaNative.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/LdaNative.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -920,12 +920,12 @@
           "runtimes/win-x64/native/FastTreeNative.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/FastTreeNative.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -992,12 +992,12 @@
           "runtimes/win-x64/native/SymSgdNative.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/SymSgdNative.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -1036,32 +1036,32 @@
           "runtimes/win-x64/native/MklImports.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "2021.3.1.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/MklProxyNative.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/libiomp5md.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "5.0.2018.913"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/MklImports.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "2021.3.1.0"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/MklProxyNative.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/libiomp5md.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "5.0.2018.913"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -1153,17 +1153,17 @@
           "runtimes/win-arm64/native/MatrixFactorizationNative.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x64/native/MatrixFactorizationNative.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           },
           "runtimes/win-x86/native/MatrixFactorizationNative.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.2200.325.52801"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -1389,7 +1389,7 @@
         "runtime": {
           "lib/net8.0/Oracle.ManagedDataAccess.dll": {
             "assemblyVersion": "23.1.0.0",
-            "fileVersion": "23.1.0.0"
+            "fileVersion": "0.0.0.0"
           }
         }
       },

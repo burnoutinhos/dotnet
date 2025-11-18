@@ -12,7 +12,6 @@ namespace BurnoutinhosProject.Connection
         }
         public DbSet<TimeBlock> TimeBlock { get; set; }
         public DbSet<Notification> Notification { get; set; }
-        public DbSet<Analytics> Analytics { get; set; }
         public DbSet<Suggestion> Suggestion { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Todo> Todo { get; set; }
@@ -22,7 +21,6 @@ namespace BurnoutinhosProject.Connection
         {
             modelBuilder.ApplyConfiguration(new TimeBlockMapper());
             modelBuilder.ApplyConfiguration(new NotificationMapper());
-            modelBuilder.ApplyConfiguration(new AnalyticsMapper());
             modelBuilder.ApplyConfiguration(new SuggestionMapper());
             modelBuilder.ApplyConfiguration(new UserMapper());
             modelBuilder.ApplyConfiguration(new TodoMapper());

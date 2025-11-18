@@ -16,36 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
-builder.Services.AddScoped<AnalyticsRepository>();
-builder.Services.AddScoped<NotificationRepository>();
-builder.Services.AddScoped<SuggestionRepository>();
-builder.Services.AddScoped<TimeBlockRepository>();
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<TodoRepository>();
-
-builder.Services.AddScoped<AnalyticsService>();
-builder.Services.AddScoped<NotificationService>();
-builder.Services.AddScoped<SuggestionService>();
-builder.Services.AddScoped<TimeBlockService>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<TodoService>();
-
-
-
-var app = builder.Build();
-
-
-var jwtKey = builder.Configuration["Jwt:Key"];
-var jwtIssuer = builder.Configuration["Jwt:Issuer"];
-var jwtAudience = builder.Configuration["Jwt:Audience"];
-
-// Add services to the container.
-
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -54,6 +24,24 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new AuthorizeFilter());
 });
 
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+
+// REPOSITORIES
+builder.Services.AddScoped<NotificationRepository>();
+builder.Services.AddScoped<SuggestionRepository>();
+builder.Services.AddScoped<TimeBlockRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<TodoRepository>();
+
+// SERVICES
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<SuggestionService>();
+builder.Services.AddScoped<TimeBlockService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TodoService>();
+
+// OpenTelemetry
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(resource => resource
         .AddService("BurnoutinhosAPI", "1.0.0")
@@ -65,10 +53,8 @@ builder.Services.AddOpenTelemetry()
         .AddAspNetCoreInstrumentation(options =>
         {
             options.RecordException = true;
-            options.Filter = (httpContext) =>
-            {
-                return !httpContext.Request.Path.StartsWithSegments("/swagger");
-            };
+            options.Filter = httpContext =>
+                !httpContext.Request.Path.StartsWithSegments("/swagger");
         })
         .AddHttpClientInstrumentation()
         .AddConsoleExporter())
@@ -77,36 +63,40 @@ builder.Services.AddOpenTelemetry()
         .AddHttpClientInstrumentation()
         .AddConsoleExporter());
 
-
 builder.Services.AddEndpointsApiExplorer();
+
+// JWT
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtAudience = builder.Configuration["Jwt:Audience"];
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-
             ValidateIssuer = true,
             ValidIssuer = jwtIssuer,
-
             ValidateAudience = true,
             ValidAudience = jwtAudience,
-
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
         };
     });
+
 builder.Services.AddAuthorization();
+
+// Swagger
 builder.Services.AddSwaggerGen(c =>
 {
-
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        In = ParameterLocation.Header,
         Description = "Insira o token JWT desta forma: Bearer {seu Token}"
     });
 
@@ -115,12 +105,12 @@ builder.Services.AddSwaggerGen(c =>
         Title = "Burnoutinhos API",
         Version = "v1",
         Description = "Api desenvolvida para a global solution de segundo semestre do segundo ano de ADS",
-
     });
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
+
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -138,7 +128,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configure the HTTP request pipeline.
+var app = builder.Build();
+
+// Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -146,7 +138,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication(); // faltou isso também!
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 
