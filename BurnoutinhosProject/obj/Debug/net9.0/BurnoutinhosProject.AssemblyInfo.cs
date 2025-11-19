@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BurnoutinhosProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c13c077d6f26d86cb38f58d2e8133384fa017c25")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34ce8586f8b1fae75d4caa52d397ae01b87fa9f6")]
 [assembly: System.Reflection.AssemblyProductAttribute("BurnoutinhosProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BurnoutinhosProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

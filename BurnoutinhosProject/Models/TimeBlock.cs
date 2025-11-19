@@ -9,6 +9,8 @@ namespace BurnoutinhosProject.Models
 
         public DateTime? Start { get; set; }
 
+        public DateTime? End { get; set; }
+
         public TypeTimeEnum TypeTime{ get; set; }
 
         public int? UserId { get; set; }
