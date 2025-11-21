@@ -8,28 +8,28 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
-            builder.ToTable("t_burnoutinhos_notification");
+            builder.ToTable("T_BURNOUTINHOS_NOTIFICATION");
             builder.HasKey(n => n.Id);
             builder.Property(n => n.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id_notif");
+                .HasColumnName("ID_NOTIF");
             builder.Property(n => n.UserId)
-                .HasColumnName("id_user")
+                .HasColumnName("ID_USER")
                 .IsRequired();
             builder.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Property(n => n.Message)
-                .HasColumnName("message_notif")
+                .HasColumnName("MESSAGE_NOTIF")
                 .IsRequired();
             builder.Property(n => n.CreatedAt)
-                .HasColumnName("created_at")
+                .HasColumnName("CREATED_AT")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired();
             builder.Property(n => n.UpdatedAt)
-                .HasColumnName("updated_at")
+                .HasColumnName("UPDATED_AT")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired();
             builder.Property(n => n.IsRead)

@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.Enums;
+using BurnoutinhosProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,26 +9,31 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("t_burnoutinhos_user");
+            builder.ToTable("T_BURNOUTINHOS_USER");
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id_user");
+                .HasColumnType("NUMBER(10)")
+                .HasColumnName("ID_USER");
             builder.Property(u => u.Name)
                 .IsRequired()
-                .HasColumnName("name_user");
+                .HasColumnName("NAME_USER");
             builder.Property(u => u.Email)
                 .IsRequired()
-                .HasColumnName("email_user");
+                .HasColumnName("EMAIL_USER");
             builder.Property(u => u.Password)
                 .IsRequired()
-                .HasColumnName("password");
+                .HasColumnName("PASSWORD");
             builder.Property(u => u.PreferredLanguage)
                 .IsRequired()
-                .HasColumnName("language");
+                .HasColumnName("LANGUAGE")
+                .HasConversion(
+                    v => v.ToString().Replace("_", "-"),
+                    v => (LanguageEnum)Enum.Parse(typeof(LanguageEnum), v.Replace("-", "_"))
+                );
             builder.Property(u => u.ProfileImage)
-                .HasColumnName("profile_image");
+                .HasColumnName("PROFILE_IMAGE");
         }
 
     }

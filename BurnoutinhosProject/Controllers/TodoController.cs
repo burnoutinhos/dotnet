@@ -16,14 +16,41 @@ namespace BurnoutinhosProject.Controllers
             _todoService = todoService;
         }
 
+        /// <summary>
+        /// Retorna todas as tarefas cadastradas.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /todo
+        ///
+        /// </remarks>
+        /// <returns>Lista de tarefas.</returns>
+        /// <response code="200">Retorna a lista de tarefas.</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Todo>>> GetAllTodos()
         {
             var todos = await _todoService.GetAllTodosAsync();
             return Ok(todos);
         }
 
+        /// <summary>
+        /// Retorna uma tarefa específica por ID.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /todo/1
+        ///
+        /// </remarks>
+        /// <param name="id">ID da tarefa.</param>
+        /// <returns>Tarefa encontrada.</returns>
+        /// <response code="200">Retorna a tarefa.</response>
+        /// <response code="404">Tarefa não encontrada.</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Todo>> GetTodoById(int id)
         {
             var todo = await _todoService.GetTodoByIdAsync(id);
@@ -34,21 +61,84 @@ namespace BurnoutinhosProject.Controllers
             return Ok(todo);
         }
 
+        /// <summary>
+        /// Retorna todas as tarefas de um usuário específico.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /todo/user/1
+        ///
+        /// </remarks>
+        /// <param name="userId">ID do usuário.</param>
+        /// <returns>Lista de tarefas do usuário.</returns>
+        /// <response code="200">Retorna a lista de tarefas do usuário.</response>
         [HttpGet("user/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Todo>>> GetTodosByUserId(int userId)
         {
             var todos = await _todoService.GetTodosByUserIdAsync(userId);
             return Ok(todos);
         }
 
+        /// <summary>
+        /// Cria uma nova tarefa.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     POST /todo
+        ///     {
+        ///        "title": "Estudar SQL",
+        ///        "description": "Revisar conceitos básicos",
+        ///        "startDate": "2025-01-10T08:00:00",
+        ///        "endDate": "2025-01-10T09:00:00",
+        ///        "isCompleted": false,
+        ///        "userId": 1,
+        ///        "createdAt": "2025-01-10T07:55:00"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="todo">Objeto da tarefa a ser criada.</param>
+        /// <returns>Tarefa criada.</returns>
+        /// <response code="201">Tarefa criada com sucesso.</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Todo>> CreateTodo([FromBody] Todo todo)
         {
             var createdTodo = await _todoService.CreateTodoAsync(todo);
             return CreatedAtAction(nameof(GetTodoById), new { id = createdTodo.Id }, createdTodo);
         }
 
+        /// <summary>
+        /// Atualiza uma tarefa existente.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     PUT /todo/1
+        ///     {
+        ///        "id": 1,
+        ///        "title": "Estudar SQL Avançado",
+        ///        "description": "Revisar conceitos avançados",
+        ///        "startDate": "2025-01-10T08:00:00",
+        ///        "endDate": "2025-01-10T10:00:00",
+        ///        "isCompleted": true,
+        ///        "userId": 1,
+        ///        "createdAt": "2025-01-10T07:55:00"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="id">ID da tarefa.</param>
+        /// <param name="todo">Objeto da tarefa com dados atualizados.</param>
+        /// <returns>Tarefa atualizada.</returns>
+        /// <response code="200">Tarefa atualizada com sucesso.</response>
+        /// <response code="400">IDs incongruentes.</response>
+        /// <response code="404">Tarefa não encontrada.</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Todo>> UpdateTodo(int id, [FromBody] Todo todo)
         {
             if (id != todo.Id)
@@ -63,7 +153,22 @@ namespace BurnoutinhosProject.Controllers
             return Ok(updatedTodo);
         }
 
+        /// <summary>
+        /// Deleta uma tarefa.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     DELETE /todo/1
+        ///
+        /// </remarks>
+        /// <param name="id">ID da tarefa a ser deletada.</param>
+        /// <returns>Sem conteúdo.</returns>
+        /// <response code="204">Tarefa deletada com sucesso.</response>
+        /// <response code="404">Tarefa não encontrada.</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteTodo(int id)
         {
             var result = await _todoService.DeleteTodoAsync(id);

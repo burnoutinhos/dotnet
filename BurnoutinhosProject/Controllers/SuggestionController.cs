@@ -15,14 +15,41 @@ namespace BurnoutinhosProject.Controllers
             this.suggestionService = suggestionService;
         }
 
+        /// <summary>
+        /// Retorna todas as sugestões cadastradas.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /suggestion
+        ///
+        /// </remarks>
+        /// <returns>Lista de sugestões.</returns>
+        /// <response code="200">Retorna a lista de sugestões.</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Suggestion>>> GetSuggestions()
         {
             var suggestions = await suggestionService.GetAllAsync();
             return Ok(suggestions);
         }
 
+        /// <summary>
+        /// Retorna uma sugestão específica por ID.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /suggestion/1
+        ///
+        /// </remarks>
+        /// <param name="id">ID da sugestão.</param>
+        /// <returns>Sugestão encontrada.</returns>
+        /// <response code="200">Retorna a sugestão.</response>
+        /// <response code="404">Sugestão não encontrada.</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Suggestion>> GetSuggestionById(int id)
         {
             var suggestion = await suggestionService.GetByIdAsync(id);
@@ -33,14 +60,56 @@ namespace BurnoutinhosProject.Controllers
             return Ok(suggestion);
         }
 
+        /// <summary>
+        /// Cria uma nova sugestão.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     POST /suggestion
+        ///     {
+        ///        "suggestionDescription": "Adicionar mais detalhes ao estudo",
+        ///        "userId": 1,
+        ///        "createdAt": "2025-01-10T09:10:00"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="suggestion">Objeto da sugestão a ser criada.</param>
+        /// <returns>Sugestão criada.</returns>
+        /// <response code="201">Sugestão criada com sucesso.</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Suggestion>> CreateSuggestion([FromBody] Suggestion suggestion)
         {
             var createdSuggestion = await suggestionService.AddAsync(suggestion);
             return CreatedAtAction(nameof(GetSuggestionById), new { id = createdSuggestion.Id }, createdSuggestion);
         }
 
+        /// <summary>
+        /// Atualiza uma sugestão existente.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     PUT /suggestion/1
+        ///     {
+        ///        "id": 1,
+        ///        "suggestionDescription": "Sugestão atualizada",
+        ///        "userId": 1,
+        ///        "createdAt": "2025-01-10T09:10:00"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="id">ID da sugestão.</param>
+        /// <param name="suggestion">Objeto da sugestão com dados atualizados.</param>
+        /// <returns>Sugestão atualizada.</returns>
+        /// <response code="200">Sugestão atualizada com sucesso.</response>
+        /// <response code="400">IDs incongruentes.</response>
+        /// <response code="404">Sugestão não encontrada.</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Suggestion>> UpdateSuggestion(int id, [FromBody] Suggestion suggestion)
         {
             if (id != suggestion.Id)
@@ -55,7 +124,22 @@ namespace BurnoutinhosProject.Controllers
             return Ok(updatedSuggestion);
         }
 
+        /// <summary>
+        /// Deleta uma sugestão.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     DELETE /suggestion/1
+        ///
+        /// </remarks>
+        /// <param name="id">ID da sugestão a ser deletada.</param>
+        /// <returns>Sem conteúdo.</returns>
+        /// <response code="204">Sugestão deletada com sucesso.</response>
+        /// <response code="404">Sugestão não encontrada.</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteSuggestion(int id)
         {
             var deleted = await suggestionService.DeleteAsync(id);

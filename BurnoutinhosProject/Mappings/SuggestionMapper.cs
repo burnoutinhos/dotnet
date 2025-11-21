@@ -8,24 +8,24 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<Suggestion> builder)
         {
-            builder.ToTable("t_burnoutinhos_suggestion");
+            builder.ToTable("T_BURNOUTINHOS_SUGGESTION");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id_suggestion");
+                .HasColumnName("ID_SUGGESTION");
             builder.Property(s => s.SuggestionDescription)
-                .HasColumnName("suggestion_desc")
+                .HasColumnName("SUGGESTION_DESC")
                 .IsRequired();
             builder.Property(s => s.TodoId)
-                .HasColumnName("id_todo")
+                .HasColumnName("ID_TODO")
                 .IsRequired();
             builder.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(s => s.TodoId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Property(s => s.CreatedAt)
-                .HasColumnName("created_at")
+                .HasColumnName("CREATED_AT")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired();
         }

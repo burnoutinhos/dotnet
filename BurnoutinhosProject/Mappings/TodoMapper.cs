@@ -8,49 +8,49 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<Todo> builder)
         {
-            builder.ToTable("t_burnoutinhos_todo");
+            builder.ToTable("T_BURNOUTINHOS_TODO");
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id_todo");
+                .HasColumnName("ID_TODO");
             builder.Property(t => t.Name)
                 .IsRequired()
-                .HasColumnName("name_todo");
+                .HasColumnName("NAME_TODO");
             builder.Property(t => t.Description)
-                .HasColumnName("description");
+                .HasColumnName("DESCRIPTION");
             builder.Property(t => t.IsCompleted)
                 .HasDefaultValue(false)
                 .IsRequired()
-                .HasColumnName("is_completed");
+                .HasColumnName("IS_COMPLETED");
             builder.Property(t => t.Start)
-                .HasColumnName("start_todo");
+                .HasColumnName("START_TODO");
             builder.Property(t => t.End)
-                .HasColumnName("end_todo");
+                .HasColumnName("END_TODO");
             builder.Property(t => t.Type)
                 .IsRequired()
-                .HasColumnName("type");
+                .HasColumnName("TYPE");
             builder.Property(t => t.IdSugestion)
-                .HasColumnName("id_suggestion");
+                .HasColumnName("ID_SUGGESTION");
             builder.HasOne<Todo>()
                 .WithMany()
                 .HasForeignKey(t => t.IdSugestion)
-                .HasConstraintName("sugestao_todo");
+                .HasConstraintName("SUGESTAO_TODO");
             builder.Property(t => t.UserId)
                 .IsRequired()
-                .HasColumnName("user_id");
+                .HasColumnName("USER_ID");
             builder.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(u => u.UserId)
-                .HasConstraintName("usuario_todo");
+                .HasConstraintName("USUARIO_TODO");
             builder.Property(t => t.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired()
-                .HasColumnName("created_at");
+                .HasColumnName("CREATED_AT");
             builder.Property(t => t.UpdatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired()
-                .HasColumnName("updated_at");
+                .HasColumnName("UPDATED_AT");
         }
     }
 }

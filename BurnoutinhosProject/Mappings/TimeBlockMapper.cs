@@ -8,34 +8,34 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<TimeBlock> builder)
         {
-            builder.ToTable("t_burnoutinhos_timeblock");
+            builder.ToTable("T_BURNOUTINHOS_TIMEBLOCK");
             builder.HasKey(tb => tb.Id);
             builder.Property(tb => tb.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id_timebk");
+                .HasColumnName("ID_TIMEBK");
             builder.Property(tb => tb.Name)
                 .IsRequired()
-                .HasColumnName("name_timebk");
+                .HasColumnName("NAME_TIMEBK");
             builder.Property(tb => tb.Start)
-                .HasColumnName("start_timebk");
+                .HasColumnName("START_TIMEBK");
             builder.Property(tb => tb.TypeTime)
                 .IsRequired()
-                .HasColumnName("type_timebk");
+                .HasColumnName("TYPE_TIMEBK");
             builder.Property(tb => tb.TimeCount)
                 .IsRequired()
-                .HasColumnName("time_count");
+                .HasColumnName("TIME_COUNT");
             builder.Property(tb => tb.End)
                 .IsRequired()
-                .HasColumnName("max_timebk");
+                .HasColumnName("MAX_TIMEBK");
             builder.Property(tb => tb.UserId)
-                .HasColumnName("id_user");
+                .HasColumnName("ID_USER");
             builder.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(tb => tb.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
             builder.Property(tb => tb.TodoId)
-                .HasColumnName("id_todo");
+                .HasColumnName("ID_TODO");
             builder.HasOne<Todo>()
                 .WithMany()
                 .HasForeignKey(tb => tb.TodoId)
@@ -43,11 +43,11 @@ namespace BurnoutinhosProject.Mappings
             builder.Property(tb => tb.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired()
-                .HasColumnName("created_at");
+                .HasColumnName("CREATED_AT");
             builder.Property(tb => tb.UpdatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired()
-                .HasColumnName("updated_at");
+                .HasColumnName("UPDATED_AT");
         }
     }
 }

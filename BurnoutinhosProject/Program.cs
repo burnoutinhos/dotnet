@@ -40,6 +40,8 @@ builder.Services.AddScoped<SuggestionService>();
 builder.Services.AddScoped<TimeBlockService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TodoService>();
+builder.Services.AddScoped<ProcedureService>();
+builder.Services.AddScoped<TokenService>();
 
 // OpenTelemetry
 builder.Services.AddOpenTelemetry()

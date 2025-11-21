@@ -16,8 +16,29 @@ namespace BurnoutinhosProject.Controllers
             _userService = userService;
             _tokenService = tokenService;
         }
+
+        /// <summary>
+        /// Realiza o login do usuário e retorna um token JWT.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     POST /auth/login
+        ///     {
+        ///        "email": "usuario@exemplo.com",
+        ///        "password": "senha123"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="loginUser">Objeto contendo email e senha do usuário.</param>
+        /// <returns>Token JWT para autenticação.</returns>
+        /// <response code="200">Retorna o token de autenticação.</response>
+        /// <response code="401">Email ou senha inválidos.</response>
+
         [HttpPost("login")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginUser)
         {
             var user = await _userService.GetAllUsersAsync();

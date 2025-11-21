@@ -14,8 +14,19 @@ namespace WebApplication3.Controllers
         private static readonly Meter Meter = new("GpsMottuAPI");
         private static readonly Counter<long> RequestCounter = Meter.CreateCounter<long>("custom_requests_total");
 
+        /// <summary>
+        /// Verifica o status de saúde da aplicação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /api/telemetry/health
+        ///
+        /// </remarks>
+        /// <returns>Status de saúde da aplicação.</returns>
+        /// <response code="200">Retorna o status de saúde.</response>
         [HttpGet("health")]
-        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult HealthCheck()
         {
             using var activity = ActivitySource.StartActivity("HealthCheck");
@@ -34,8 +45,19 @@ namespace WebApplication3.Controllers
             return Ok(healthStatus);
         }
 
+        /// <summary>
+        /// Retorna informações sobre métricas da aplicação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /api/telemetry/metrics
+        ///
+        /// </remarks>
+        /// <returns>Informações sobre métricas.</returns>
+        /// <response code="200">Retorna informações sobre métricas exportadas via OpenTelemetry.</response>
         [HttpGet("metrics")]
-        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetMetrics()
         {
             using var activity = ActivitySource.StartActivity("GetMetrics");
@@ -53,8 +75,23 @@ namespace WebApplication3.Controllers
             return Ok(metrics);
         }
 
+        /// <summary>
+        /// Executa um teste de rastreamento distribuído.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     POST /api/telemetry/trace-test
+        ///     {
+        ///        "testData": "Exemplo de dados para teste de trace"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="data">Dados para teste de rastreamento.</param>
+        /// <returns>Informações do trace executado.</returns>
+        /// <response code="200">Retorna informações do trace incluindo TraceId e SpanId.</response>
         [HttpPost("trace-test")]
-        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> TraceTest([FromBody] object data)
         {
             using var activity = ActivitySource.StartActivity("TraceTest");
