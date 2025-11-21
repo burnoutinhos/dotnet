@@ -8,25 +8,37 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<TimeBlock> builder)
         {
-            builder.ToTable("TimeBlock");
+            builder.ToTable("t_burnoutinhos_timeblock");
             builder.HasKey(tb => tb.Id);
             builder.Property(tb => tb.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id");
+                .HasColumnName("id_timebk");
             builder.Property(tb => tb.Name)
                 .IsRequired()
-                .HasColumnName("name");
+                .HasColumnName("name_timebk");
             builder.Property(tb => tb.Start)
-                .HasColumnName("start");
+                .HasColumnName("start_timebk");
             builder.Property(tb => tb.TypeTime)
                 .IsRequired()
-                .HasColumnName("type_time");
+                .HasColumnName("type_timebk");
+            builder.Property(tb => tb.TimeCount)
+                .IsRequired()
+                .HasColumnName("time_count");
+            builder.Property(tb => tb.End)
+                .IsRequired()
+                .HasColumnName("max_timebk");
             builder.Property(tb => tb.UserId)
-                .HasColumnName("todo_id");
+                .HasColumnName("id_user");
             builder.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(tb => tb.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+            builder.Property(tb => tb.TodoId)
+                .HasColumnName("id_todo");
+            builder.HasOne<Todo>()
+                .WithMany()
+                .HasForeignKey(tb => tb.TodoId)
                 .OnDelete(DeleteBehavior.SetNull);
             builder.Property(tb => tb.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")

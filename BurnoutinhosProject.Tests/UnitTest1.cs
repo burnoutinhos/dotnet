@@ -65,7 +65,7 @@ public class UnitTest1
         {
             Id = 1,
             SuggestionDescription = "Sugestão para deletar",
-            UserId = 1,
+            TodoId = 1,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -88,8 +88,8 @@ public class UnitTest1
         var timeBlock = new TimeBlock
         {
             Id = 1,
-            Start = DateTime.UtcNow,
-            End = DateTime.UtcNow.AddHours(2),
+            Start = 10.00f,
+            End = 12.00f,
             Name = "Estudar",
             UserId = 1
         };
@@ -111,9 +111,9 @@ public class UnitTest1
         // Arrange
         var suggestions = new List<Suggestion>
         {
-            new Suggestion { Id = 1, SuggestionDescription = "Sugestão 1", UserId = 1, CreatedAt = DateTime.UtcNow },
-            new Suggestion { Id = 2, SuggestionDescription = "Sugestão 2", UserId = 2, CreatedAt = DateTime.UtcNow },
-            new Suggestion { Id = 3, SuggestionDescription = "Sugestão 3", UserId = 1, CreatedAt = DateTime.UtcNow }
+            new Suggestion { Id = 1, SuggestionDescription = "Sugestão 1", TodoId = 1, CreatedAt = DateTime.UtcNow },
+            new Suggestion { Id = 2, SuggestionDescription = "Sugestão 2", TodoId = 2, CreatedAt = DateTime.UtcNow },
+            new Suggestion { Id = 3, SuggestionDescription = "Sugestão 3", TodoId = 1, CreatedAt = DateTime.UtcNow }
         };
 
         await _context.Suggestion.AddRangeAsync(suggestions);

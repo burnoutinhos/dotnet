@@ -7,13 +7,17 @@ namespace BurnoutinhosProject.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public DateTime? Start { get; set; }
+        public float TimeCount { get; set; }
 
-        public DateTime? End { get; set; }
+        public float Start { get; set; }
+
+        public float End { get; set; }
 
         public TypeTimeEnum TypeTime{ get; set; }
 
         public int? UserId { get; set; }
+
+        public int? TodoId { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

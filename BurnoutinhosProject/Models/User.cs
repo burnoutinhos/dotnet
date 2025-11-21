@@ -15,8 +15,6 @@ namespace BurnoutinhosProject.Models
 
         public LanguageEnum PreferredLanguage { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public string ProfileImage { get; set; }
     }
 }

@@ -8,15 +8,15 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<Todo> builder)
         {
-            builder.ToTable("Todo");
+            builder.ToTable("t_burnoutinhos_todo");
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id");
+                .HasColumnName("id_todo");
             builder.Property(t => t.Name)
                 .IsRequired()
-                .HasColumnName("title");
+                .HasColumnName("name_todo");
             builder.Property(t => t.Description)
                 .HasColumnName("description");
             builder.Property(t => t.IsCompleted)
@@ -24,9 +24,9 @@ namespace BurnoutinhosProject.Mappings
                 .IsRequired()
                 .HasColumnName("is_completed");
             builder.Property(t => t.Start)
-                .HasColumnName("due_date");
+                .HasColumnName("start_todo");
             builder.Property(t => t.End)
-                .HasColumnName("end_date");
+                .HasColumnName("end_todo");
             builder.Property(t => t.Type)
                 .IsRequired()
                 .HasColumnName("type");

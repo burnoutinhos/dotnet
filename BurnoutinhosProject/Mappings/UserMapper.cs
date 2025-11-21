@@ -8,32 +8,26 @@ namespace BurnoutinhosProject.Mappings
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("User");
+            builder.ToTable("t_burnoutinhos_user");
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired()
-                .HasColumnName("id");
+                .HasColumnName("id_user");
             builder.Property(u => u.Name)
                 .IsRequired()
-                .HasColumnName("username");
+                .HasColumnName("name_user");
             builder.Property(u => u.Email)
                 .IsRequired()
-                .HasColumnName("email");
+                .HasColumnName("email_user");
             builder.Property(u => u.Password)
                 .IsRequired()
                 .HasColumnName("password");
             builder.Property(u => u.PreferredLanguage)
                 .IsRequired()
-                .HasColumnName("preferred_language");
-            builder.Property(u => u.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .IsRequired()
-                .HasColumnName("created_at");
-            builder.Property(u => u.UpdatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .IsRequired()
-                .HasColumnName("updated_at");
+                .HasColumnName("language");
+            builder.Property(u => u.ProfileImage)
+                .HasColumnName("profile_image");
         }
 
     }
