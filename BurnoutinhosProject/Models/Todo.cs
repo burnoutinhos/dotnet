@@ -16,9 +16,7 @@ namespace BurnoutinhosProject.Models
         public TypeEnum Type { get; set; }
 
         public int UserId { get; set; }
-
-        public int IdSugestion { get; set; }
-        public bool IsCompleted { get; set; }
+        public int IsCompleted { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

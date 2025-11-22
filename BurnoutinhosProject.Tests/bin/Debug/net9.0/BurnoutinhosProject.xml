@@ -4,5 +4,924 @@
         <name>BurnoutinhosProject</name>
     </assembly>
     <members>
+        <member name="M:BurnoutinhosProject.Controllers.AuthController.Login(BurnoutinhosProject.DTO.UserLoginDto)">
+             <summary>
+             Realiza o login do usuário e retorna um token JWT.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /auth/login
+                 {
+                    "email": "usuario@exemplo.com",
+                    "password": "senha123"
+                 }
+            
+             </remarks>
+             <param name="loginUser">Objeto contendo email e senha do usuário.</param>
+             <returns>Token JWT para autenticação.</returns>
+             <response code="200">Retorna o token de autenticação.</response>
+             <response code="401">Email ou senha inválidos.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.GetAllNotifications">
+             <summary>
+             Retorna todas as notificações cadastradas.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /notification
+            
+             </remarks>
+             <returns>Lista de notificações.</returns>
+             <response code="200">Retorna a lista de notificações.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.GetPagedNotifications(System.Int32,System.Int32)">
+             <summary>
+             Retorna notificações cadastradas com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /notification/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 5,
+                   "totalRecords": 45,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de notificações.</returns>
+             <response code="200">Retorna a lista paginada de notificações.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.GetPagedNotificationsByUserId(System.Int32,System.Int32,System.Int32)">
+             <summary>
+             Retorna notificações de um usuário específico com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /notification/user/1/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 3,
+                   "totalRecords": 22,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="userId">ID do usuário.</param>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de notificações do usuário.</returns>
+             <response code="200">Retorna a lista paginada de notificações do usuário.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.GetNotificationsByUserId(System.Int32)">
+             <summary>
+             Retorna todas as notificações de um usuário específico.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /notification/user/1
+            
+             </remarks>
+             <param name="userId">ID do usuário.</param>
+             <returns>Lista de notificações do usuário.</returns>
+             <response code="200">Retorna a lista de notificações do usuário.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.GetNotificationById(System.Int32)">
+             <summary>
+             Retorna uma notificação específica por ID.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /notification/1
+            
+             </remarks>
+             <param name="id">ID da notificação.</param>
+             <returns>Notificação encontrada.</returns>
+             <response code="200">Retorna a notificação.</response>
+             <response code="404">Notificação não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.CreateNotification(BurnoutinhosProject.Models.Notification)">
+             <summary>
+             Cria uma nova notificação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /notification
+                 {
+                    "message": "Lembrete de tarefa",
+                    "userId": 1,
+                    "isRead": false,
+                    "createdAt": "2025-01-10T14:00:00"
+                 }
+            
+             </remarks>
+             <param name="notification">Objeto da notificação a ser criada.</param>
+             <returns>Notificação criada.</returns>
+             <response code="201">Notificação criada com sucesso.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.UpdateNotification(System.Int32,BurnoutinhosProject.Models.Notification)">
+             <summary>
+             Atualiza uma notificação existente.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 PUT /notification/1
+                 {
+                    "id": 1,
+                    "message": "Lembrete atualizado",
+                    "userId": 1,
+                    "isRead": true,
+                    "createdAt": "2025-01-10T14:00:00"
+                 }
+            
+             </remarks>
+             <param name="id">ID da notificação.</param>
+             <param name="notification">Objeto da notificação com dados atualizados.</param>
+             <returns>Notificação atualizada.</returns>
+             <response code="200">Notificação atualizada com sucesso.</response>
+             <response code="400">IDs incongruentes.</response>
+             <response code="404">Notificação não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.NotificationController.DeleteNotification(System.Int32)">
+             <summary>
+             Deleta uma notificação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 DELETE /notification/1
+            
+             </remarks>
+             <param name="id">ID da notificação a ser deletada.</param>
+             <returns>Sem conteúdo.</returns>
+             <response code="204">Notificação deletada com sucesso.</response>
+             <response code="404">Notificação não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.ProcedureController.InsertUser(UserInsertRequest)">
+             <summary>
+             Insere um novo usuário através de procedure Oracle.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /api/procedure/user
+                 {
+                    "idUser": 1,
+                    "nameUser": "João Silva",
+                    "emailUser": "joao@example.com",
+                    "language": "PT-BR",
+                    "profileImage": "avatar.jpg",
+                    "password": "senha123"
+                 }
+            
+             </remarks>
+             <param name="request">Dados do usuário a ser inserido.</param>
+             <returns>Mensagem de sucesso ou erro.</returns>
+             <response code="200">Usuário inserido com sucesso.</response>
+             <response code="400">Erro ao inserir usuário.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.ProcedureController.InsertNotification(NotificationInsertRequest)">
+             <summary>
+             Insere uma nova notificação através de procedure Oracle.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /api/procedure/notification
+                 {
+                    "idNotif": 1,
+                    "updatedAt": "2025-01-10T14:30:00",
+                    "messageNotif": "Lembrete de tarefa",
+                    "createdAt": "2025-01-10T14:00:00",
+                    "idUser": 1
+                 }
+            
+             </remarks>
+             <param name="request">Dados da notificação a ser inserida.</param>
+             <returns>Mensagem de sucesso ou erro.</returns>
+             <response code="200">Notificação inserida com sucesso.</response>
+             <response code="400">Erro ao inserir notificação.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.ProcedureController.InsertTodo(TodoInsertRequest)">
+             <summary>
+             Insere uma nova tarefa (todo) através de procedure Oracle.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /api/procedure/todo
+                 {
+                    "idTodo": 1,
+                    "nameTodo": "Estudar SQL",
+                    "startTodo": "2025-01-10T08:00:00",
+                    "endTodo": "2025-01-10T09:00:00",
+                    "createdAt": "2025-01-10T07:55:00",
+                    "updatedAt": "2025-01-10T09:05:00",
+                    "description": "Revisar conceitos básicos",
+                    "isCompleted": "N",
+                    "idUser": 1
+                 }
+            
+             </remarks>
+             <param name="request">Dados da tarefa a ser inserida.</param>
+             <returns>Mensagem de sucesso ou erro.</returns>
+             <response code="200">Todo inserido com sucesso.</response>
+             <response code="400">Erro ao inserir todo.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.ProcedureController.InsertSuggestion(SuggestionInsertRequest)">
+             <summary>
+             Insere uma nova sugestão através de procedure Oracle.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /api/procedure/suggestion
+                 {
+                    "idSuggestion": 1,
+                    "suggestionDesc": "Adicionar mais detalhes ao estudo",
+                    "createdAt": "2025-01-10T09:10:00",
+                    "idTodo": 1
+                 }
+            
+             </remarks>
+             <param name="request">Dados da sugestão a ser inserida.</param>
+             <returns>Mensagem de sucesso ou erro.</returns>
+             <response code="200">Sugestão inserida com sucesso.</response>
+             <response code="400">Erro ao inserir sugestão.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.ProcedureController.InsertTimeBlock(TimeBlockInsertRequest)">
+             <summary>
+             Insere um novo bloco de tempo através de procedure Oracle.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /api/procedure/timeblock
+                 {
+                    "idTimebk": 1,
+                    "nameTimebk": "Foco SQL",
+                    "timeCount": 25,
+                    "maxTimebk": 50,
+                    "startTimebk": 0,
+                    "createdAt": "2025-01-10T08:10:00",
+                    "typeTimebk": "FOCUS",
+                    "idUser": 1,
+                    "typeTimer": "POMODORO",
+                    "idTodo": 1
+                 }
+            
+             </remarks>
+             <param name="request">Dados do bloco de tempo a ser inserido.</param>
+             <returns>Mensagem de sucesso ou erro.</returns>
+             <response code="200">TimeBlock inserido com sucesso.</response>
+             <response code="400">Erro ao inserir timeblock.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.SuggestionController.GetSuggestions">
+             <summary>
+             Retorna todas as sugestões cadastradas.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /suggestion
+            
+             </remarks>
+             <returns>Lista de sugestões.</returns>
+             <response code="200">Retorna a lista de sugestões.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.SuggestionController.GetPagedSuggestions(System.Int32,System.Int32)">
+             <summary>
+             Retorna sugestões cadastradas com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /suggestion/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 2,
+                   "totalRecords": 15,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de sugestões.</returns>
+             <response code="200">Retorna a lista paginada de sugestões.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.SuggestionController.GetPagedSuggestionsByTodoId(System.Int32,System.Int32,System.Int32)">
+             <summary>
+             Retorna sugestões de uma tarefa específica com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /suggestion/todo/1/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 1,
+                   "totalRecords": 8,
+                   "hasPrevious": false,
+                   "hasNext": false,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="todoId">ID da tarefa.</param>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de sugestões da tarefa.</returns>
+             <response code="200">Retorna a lista paginada de sugestões da tarefa.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.SuggestionController.GetSuggestionById(System.Int32)">
+             <summary>
+             Retorna uma sugestão específica por ID.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /suggestion/1
+            
+             </remarks>
+             <param name="id">ID da sugestão.</param>
+             <returns>Sugestão encontrada.</returns>
+             <response code="200">Retorna a sugestão.</response>
+             <response code="404">Sugestão não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.SuggestionController.CreateSuggestion(BurnoutinhosProject.Models.Suggestion)">
+             <summary>
+             Cria uma nova sugestão.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /suggestion
+                 {
+                    "suggestionDescription": "Adicionar mais detalhes ao estudo",
+                    "userId": 1,
+                    "createdAt": "2025-01-10T09:10:00"
+                 }
+            
+             </remarks>
+             <param name="suggestion">Objeto da sugestão a ser criada.</param>
+             <returns>Sugestão criada.</returns>
+             <response code="201">Sugestão criada com sucesso.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.SuggestionController.UpdateSuggestion(System.Int32,BurnoutinhosProject.Models.Suggestion)">
+             <summary>
+             Atualiza uma sugestão existente.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 PUT /suggestion/1
+                 {
+                    "id": 1,
+                    "suggestionDescription": "Sugestão atualizada",
+                    "userId": 1,
+                    "createdAt": "2025-01-10T09:10:00"
+                 }
+            
+             </remarks>
+             <param name="id">ID da sugestão.</param>
+             <param name="suggestion">Objeto da sugestão com dados atualizados.</param>
+             <returns>Sugestão atualizada.</returns>
+             <response code="200">Sugestão atualizada com sucesso.</response>
+             <response code="400">IDs incongruentes.</response>
+             <response code="404">Sugestão não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.SuggestionController.DeleteSuggestion(System.Int32)">
+             <summary>
+             Deleta uma sugestão.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 DELETE /suggestion/1
+            
+             </remarks>
+             <param name="id">ID da sugestão a ser deletada.</param>
+             <returns>Sem conteúdo.</returns>
+             <response code="204">Sugestão deletada com sucesso.</response>
+             <response code="404">Sugestão não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TimeBlockController.GetTimeBlocks">
+             <summary>
+             Retorna todos os blocos de tempo cadastrados.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /timeblock
+            
+             </remarks>
+             <returns>Lista de blocos de tempo.</returns>
+             <response code="200">Retorna a lista de blocos de tempo.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TimeBlockController.GetPagedTimeBlocks(System.Int32,System.Int32)">
+             <summary>
+             Retorna blocos de tempo cadastrados com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /timeblock/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 3,
+                   "totalRecords": 25,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de blocos de tempo.</returns>
+             <response code="200">Retorna a lista paginada de blocos de tempo.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TimeBlockController.GetPagedTimeBlocksByUserId(System.Int32,System.Int32,System.Int32)">
+             <summary>
+             Retorna blocos de tempo de um usuário específico com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /timeblock/user/1/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 2,
+                   "totalRecords": 18,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="userId">ID do usuário.</param>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de blocos de tempo do usuário.</returns>
+             <response code="200">Retorna a lista paginada de blocos de tempo do usuário.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TimeBlockController.GetTimeBlock(System.Int32)">
+             <summary>
+             Retorna um bloco de tempo específico por ID.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /timeblock/1
+            
+             </remarks>
+             <param name="id">ID do bloco de tempo.</param>
+             <returns>Bloco de tempo encontrado.</returns>
+             <response code="200">Retorna o bloco de tempo.</response>
+             <response code="404">Bloco de tempo não encontrado.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TimeBlockController.CreateTimeBlock(BurnoutinhosProject.Models.TimeBlock)">
+             <summary>
+             Cria um novo bloco de tempo.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /timeblock
+                 {
+                    "name": "Foco SQL",
+                    "timeCount": 25,
+                    "maxTime": 50,
+                    "startTime": 0,
+                    "createdAt": "2025-01-10T08:10:00",
+                    "type": "FOCUS",
+                    "userId": 1,
+                    "timerType": "POMODORO",
+                    "todoId": 1
+                 }
+            
+             </remarks>
+             <param name="timeBlock">Objeto do bloco de tempo a ser criado.</param>
+             <returns>Bloco de tempo criado.</returns>
+             <response code="201">Bloco de tempo criado com sucesso.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TimeBlockController.UpdateTimeBlock(System.Int32,BurnoutinhosProject.Models.TimeBlock)">
+             <summary>
+             Atualiza um bloco de tempo existente.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 PUT /timeblock/1
+                 {
+                    "id": 1,
+                    "name": "Foco SQL Atualizado",
+                    "timeCount": 30,
+                    "maxTime": 60,
+                    "startTime": 0,
+                    "createdAt": "2025-01-10T08:10:00",
+                    "type": "FOCUS",
+                    "userId": 1,
+                    "timerType": "POMODORO",
+                    "todoId": 1
+                 }
+            
+             </remarks>
+             <param name="id">ID do bloco de tempo.</param>
+             <param name="timeBlock">Objeto do bloco de tempo com dados atualizados.</param>
+             <returns>Bloco de tempo atualizado.</returns>
+             <response code="200">Bloco de tempo atualizado com sucesso.</response>
+             <response code="400">IDs incongruentes.</response>
+             <response code="404">Bloco de tempo não encontrado.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TimeBlockController.DeleteTimeBlock(System.Int32)">
+             <summary>
+             Deleta um bloco de tempo.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 DELETE /timeblock/1
+            
+             </remarks>
+             <param name="id">ID do bloco de tempo a ser deletado.</param>
+             <returns>Sem conteúdo.</returns>
+             <response code="204">Bloco de tempo deletado com sucesso.</response>
+             <response code="404">Bloco de tempo não encontrado.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.GetAllTodos">
+             <summary>
+             Retorna todas as tarefas cadastradas.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /todo
+            
+             </remarks>
+             <returns>Lista de tarefas.</returns>
+             <response code="200">Retorna a lista de tarefas.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.GetPagedTodos(System.Int32,System.Int32)">
+             <summary>
+             Retorna tarefas cadastradas com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /todo/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 3,
+                   "totalRecords": 25,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de tarefas.</returns>
+             <response code="200">Retorna a lista paginada de tarefas.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.GetTodoById(System.Int32)">
+             <summary>
+             Retorna uma tarefa específica por ID.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /todo/1
+            
+             </remarks>
+             <param name="id">ID da tarefa.</param>
+             <returns>Tarefa encontrada.</returns>
+             <response code="200">Retorna a tarefa.</response>
+             <response code="404">Tarefa não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.GetTodosByUserId(System.Int32)">
+             <summary>
+             Retorna todas as tarefas de um usuário específico.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /todo/user/1
+            
+             </remarks>
+             <param name="userId">ID do usuário.</param>
+             <returns>Lista de tarefas do usuário.</returns>
+             <response code="200">Retorna a lista de tarefas do usuário.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.GetPagedTodosByUserId(System.Int32,System.Int32,System.Int32)">
+             <summary>
+             Retorna tarefas de um usuário específico com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /todo/user/1/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 2,
+                   "totalRecords": 15,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="userId">ID do usuário.</param>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de tarefas do usuário.</returns>
+             <response code="200">Retorna a lista paginada de tarefas do usuário.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.CreateTodo(BurnoutinhosProject.Models.Todo)">
+             <summary>
+             Cria uma nova tarefa.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /todo
+                 {
+                    "name": "Estudar SQL",
+                    "description": "Revisar conceitos básicos",
+                    "startDate": "2025-01-10T08:00:00",
+                    "endDate": "2025-01-10T09:00:00",
+                    "isCompleted": 1,
+                    "userId": 1,
+                    "createdAt": "2025-01-10T07:55:00"
+                 }
+            
+             </remarks>
+             <param name="todo">Objeto da tarefa a ser criada.</param>
+             <returns>Tarefa criada.</returns>
+             <response code="201">Tarefa criada com sucesso.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.UpdateTodo(System.Int32,BurnoutinhosProject.Models.Todo)">
+             <summary>
+             Atualiza uma tarefa existente.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 PUT /todo/1
+                 {
+                    "id": 1,
+                    "name": "Estudar SQL Avançado",
+                    "description": "Revisar conceitos avançados",
+                    "startDate": "2025-01-10T08:00:00",
+                    "endDate": "2025-01-10T10:00:00",
+                    "isCompleted": 1,
+                    "userId": 1,
+                    "createdAt": "2025-01-10T07:55:00"
+                 }
+            
+             </remarks>
+             <param name="id">ID da tarefa.</param>
+             <param name="todo">Objeto da tarefa com dados atualizados.</param>
+             <returns>Tarefa atualizada.</returns>
+             <response code="200">Tarefa atualizada com sucesso.</response>
+             <response code="400">IDs incongruentes.</response>
+             <response code="404">Tarefa não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.TodoController.DeleteTodo(System.Int32)">
+             <summary>
+             Deleta uma tarefa.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 DELETE /todo/1
+            
+             </remarks>
+             <param name="id">ID da tarefa a ser deletada.</param>
+             <returns>Sem conteúdo.</returns>
+             <response code="204">Tarefa deletada com sucesso.</response>
+             <response code="404">Tarefa não encontrada.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.UserController.GetAllUsers">
+             <summary>
+             Retorna todos os usuários cadastrados.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /user
+            
+             </remarks>
+             <returns>Lista de usuários.</returns>
+             <response code="200">Retorna a lista de usuários.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.UserController.GetPagedUsers(System.Int32,System.Int32)">
+             <summary>
+             Retorna usuários cadastrados com paginação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /user/paged?pageNumber=1&amp;pageSize=10
+            
+             Exemplo de resposta:
+            
+                 {
+                   "pageNumber": 1,
+                   "pageSize": 10,
+                   "totalPages": 3,
+                   "totalRecords": 25,
+                   "hasPrevious": false,
+                   "hasNext": true,
+                   "data": [...]
+                 }
+            
+             </remarks>
+             <param name="pageNumber">Número da página (padrão: 1).</param>
+             <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+             <returns>Lista paginada de usuários.</returns>
+             <response code="200">Retorna a lista paginada de usuários.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.UserController.GetUserById(System.Int32)">
+             <summary>
+             Retorna um usuário específico por ID.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /user/1
+            
+             </remarks>
+             <param name="id">ID do usuário.</param>
+             <returns>Usuário encontrado.</returns>
+             <response code="200">Retorna o usuário.</response>
+             <response code="404">Usuário não encontrado.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.UserController.CreateUser(BurnoutinhosProject.Models.User)">
+             <summary>
+             Cria um novo usuário.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /user
+                 {
+                    "name": "João Silva",
+                    "email": "joao@example.com",
+                    "password": "senha123",
+                    "preferredLanguage": "PT_BR",
+                    "profileImage": "avatar.jpg"
+                 }
+            
+             </remarks>
+             <param name="user">Objeto do usuário a ser criado.</param>
+             <returns>Usuário criado.</returns>
+             <response code="201">Usuário criado com sucesso.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.UserController.UpdateUser(System.Int32,BurnoutinhosProject.Models.User)">
+             <summary>
+             Atualiza um usuário existente.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 PUT /user/1
+                 {
+                    "id": 1,
+                    "name": "João Silva Atualizado",
+                    "email": "joao.novo@example.com",
+                    "password": "novaSenha123",
+                    "preferredLanguage": "EN_US",
+                    "profileImage": "new_avatar.jpg"
+                 }
+            
+             </remarks>
+             <param name="id">ID do usuário.</param>
+             <param name="user">Objeto do usuário com dados atualizados.</param>
+             <returns>Usuário atualizado.</returns>
+             <response code="200">Usuário atualizado com sucesso.</response>
+             <response code="400">IDs incongruentes.</response>
+             <response code="404">Usuário não encontrado.</response>
+        </member>
+        <member name="M:BurnoutinhosProject.Controllers.UserController.DeleteUser(System.Int32)">
+             <summary>
+             Deleta um usuário.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 DELETE /user/1
+            
+             </remarks>
+             <param name="id">ID do usuário a ser deletado.</param>
+             <returns>Sem conteúdo.</returns>
+             <response code="204">Usuário deletado com sucesso.</response>
+             <response code="404">Usuário não encontrado.</response>
+        </member>
+        <member name="T:BurnoutinhosProject.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:BurnoutinhosProject.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BurnoutinhosProject.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BurnoutinhosProject.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WebApplication3.Controllers.TelemetryController.HealthCheck">
+             <summary>
+             Verifica o status de saúde da aplicação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /api/telemetry/health
+            
+             </remarks>
+             <returns>Status de saúde da aplicação.</returns>
+             <response code="200">Retorna o status de saúde.</response>
+        </member>
+        <member name="M:WebApplication3.Controllers.TelemetryController.GetMetrics">
+             <summary>
+             Retorna informações sobre métricas da aplicação.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 GET /api/telemetry/metrics
+            
+             </remarks>
+             <returns>Informações sobre métricas.</returns>
+             <response code="200">Retorna informações sobre métricas exportadas via OpenTelemetry.</response>
+        </member>
+        <member name="M:WebApplication3.Controllers.TelemetryController.TraceTest(System.Object)">
+             <summary>
+             Executa um teste de rastreamento distribuído.
+             </summary>
+             <remarks>
+             Exemplo de requisição:
+            
+                 POST /api/telemetry/trace-test
+                 {
+                    "testData": "Exemplo de dados para teste de trace"
+                 }
+            
+             </remarks>
+             <param name="data">Dados para teste de rastreamento.</param>
+             <returns>Informações do trace executado.</returns>
+             <response code="200">Retorna informações do trace incluindo TraceId e SpanId.</response>
+        </member>
     </members>
 </doc>

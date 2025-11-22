@@ -2672,6 +2672,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.10",
           "Microsoft.AspNetCore.OpenApi": "9.0.9",
+          "Microsoft.CodeAnalysis.CSharp": "4.9.2",
+          "Microsoft.CodeAnalysis.Common": "4.9.2",
           "Microsoft.ML": "4.0.3",
           "Microsoft.ML.AutoML": "0.22.3",
           "Microsoft.ML.Recommender": "0.22.3",

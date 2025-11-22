@@ -83,20 +83,13 @@ namespace BurnoutinhosProject.Migrations
                     DESCRIPTION = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     TYPE = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     USER_ID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    ID_SUGGESTION = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    IS_COMPLETED = table.Column<bool>(type: "BOOLEAN", nullable: false, defaultValue: false),
+                    IS_COMPLETED = table.Column<int>(type: "NUMBER(10)", nullable: false, defaultValue: 0),
                     CREATED_AT = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UPDATED_AT = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_T_BURNOUTINHOS_TODO", x => x.ID_TODO);
-                    table.ForeignKey(
-                        name: "SUGESTAO_TODO",
-                        column: x => x.ID_SUGGESTION,
-                        principalTable: "T_BURNOUTINHOS_TODO",
-                        principalColumn: "ID_TODO",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "USUARIO_TODO",
                         column: x => x.USER_ID,
@@ -157,11 +150,6 @@ namespace BurnoutinhosProject.Migrations
                 name: "IX_T_BURNOUTINHOS_TIMEBLOCK_ID_USER",
                 table: "T_BURNOUTINHOS_TIMEBLOCK",
                 column: "ID_USER");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_T_BURNOUTINHOS_TODO_ID_SUGGESTION",
-                table: "T_BURNOUTINHOS_TODO",
-                column: "ID_SUGGESTION");
 
             migrationBuilder.CreateIndex(
                 name: "IX_T_BURNOUTINHOS_TODO_USER_ID",

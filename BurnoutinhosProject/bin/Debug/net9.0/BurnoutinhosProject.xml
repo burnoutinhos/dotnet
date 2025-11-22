@@ -696,11 +696,11 @@
             
                  POST /todo
                  {
-                    "title": "Estudar SQL",
+                    "name": "Estudar SQL",
                     "description": "Revisar conceitos básicos",
                     "startDate": "2025-01-10T08:00:00",
                     "endDate": "2025-01-10T09:00:00",
-                    "isCompleted": false,
+                    "isCompleted": 1,
                     "userId": 1,
                     "createdAt": "2025-01-10T07:55:00"
                  }
@@ -720,11 +720,11 @@
                  PUT /todo/1
                  {
                     "id": 1,
-                    "title": "Estudar SQL Avançado",
+                    "name": "Estudar SQL Avançado",
                     "description": "Revisar conceitos avançados",
                     "startDate": "2025-01-10T08:00:00",
                     "endDate": "2025-01-10T10:00:00",
-                    "isCompleted": true,
+                    "isCompleted": 1,
                     "userId": 1,
                     "createdAt": "2025-01-10T07:55:00"
                  }
@@ -867,6 +867,18 @@
              <returns>Sem conteúdo.</returns>
              <response code="204">Usuário deletado com sucesso.</response>
              <response code="404">Usuário não encontrado.</response>
+        </member>
+        <member name="T:BurnoutinhosProject.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:BurnoutinhosProject.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BurnoutinhosProject.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BurnoutinhosProject.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
         </member>
         <member name="M:WebApplication3.Controllers.TelemetryController.HealthCheck">
              <summary>

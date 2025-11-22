@@ -12,7 +12,7 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace BurnoutinhosProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251122011140_InitialCreate")]
+    [Migration("20251122041539_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -176,14 +176,10 @@ namespace BurnoutinhosProject.Migrations
                         .HasColumnType("TIMESTAMP(7)")
                         .HasColumnName("END_TODO");
 
-                    b.Property<int>("IdSugestion")
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("ID_SUGGESTION");
-
-                    b.Property<bool>("IsCompleted")
+                    b.Property<int>("IsCompleted")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("BOOLEAN")
-                        .HasDefaultValue(false)
+                        .HasColumnType("NUMBER(10)")
+                        .HasDefaultValue(0)
                         .HasColumnName("IS_COMPLETED");
 
                     b.Property<string>("Name")
@@ -210,8 +206,6 @@ namespace BurnoutinhosProject.Migrations
                         .HasColumnName("USER_ID");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdSugestion");
 
                     b.HasIndex("UserId");
 
@@ -290,13 +284,6 @@ namespace BurnoutinhosProject.Migrations
 
             modelBuilder.Entity("BurnoutinhosProject.Models.Todo", b =>
                 {
-                    b.HasOne("BurnoutinhosProject.Models.Todo", null)
-                        .WithMany()
-                        .HasForeignKey("IdSugestion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("SUGESTAO_TODO");
-
                     b.HasOne("BurnoutinhosProject.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")

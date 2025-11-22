@@ -30,12 +30,6 @@ namespace BurnoutinhosProject.Mappings
             builder.Property(t => t.Type)
                 .IsRequired()
                 .HasColumnName("TYPE");
-            builder.Property(t => t.IdSugestion)
-                .HasColumnName("ID_SUGGESTION");
-            builder.HasOne<Todo>()
-                .WithMany()
-                .HasForeignKey(t => t.IdSugestion)
-                .HasConstraintName("SUGESTAO_TODO");
             builder.Property(t => t.UserId)
                 .IsRequired()
                 .HasColumnName("USER_ID");

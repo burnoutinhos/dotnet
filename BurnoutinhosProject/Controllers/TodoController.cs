@@ -174,11 +174,11 @@ namespace BurnoutinhosProject.Controllers
         ///
         ///     POST /todo
         ///     {
-        ///        "title": "Estudar SQL",
+        ///        "name": "Estudar SQL",
         ///        "description": "Revisar conceitos básicos",
         ///        "startDate": "2025-01-10T08:00:00",
         ///        "endDate": "2025-01-10T09:00:00",
-        ///        "isCompleted": false,
+        ///        "isCompleted": 1,
         ///        "userId": 1,
         ///        "createdAt": "2025-01-10T07:55:00"
         ///     }
@@ -204,11 +204,11 @@ namespace BurnoutinhosProject.Controllers
         ///     PUT /todo/1
         ///     {
         ///        "id": 1,
-        ///        "title": "Estudar SQL Avançado",
+        ///        "name": "Estudar SQL Avançado",
         ///        "description": "Revisar conceitos avançados",
         ///        "startDate": "2025-01-10T08:00:00",
         ///        "endDate": "2025-01-10T10:00:00",
-        ///        "isCompleted": true,
+        ///        "isCompleted": 1,
         ///        "userId": 1,
         ///        "createdAt": "2025-01-10T07:55:00"
         ///     }

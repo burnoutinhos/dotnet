@@ -134,7 +134,7 @@ public class UnitTest1
             Id = 1,
             Name = "Tarefa de teste",
             Description = "Descrição da tarefa",
-            IsCompleted = false,
+            IsCompleted = 0,
             UserId = 1,
             CreatedAt = DateTime.UtcNow
         };
@@ -147,6 +147,6 @@ public class UnitTest1
         var fromDb = await _context.Todo.FindAsync(1);
         fromDb.Should().NotBeNull();
         fromDb!.Name.Should().Be("Tarefa de teste");
-        fromDb.IsCompleted.Should().BeFalse();
+        fromDb.IsCompleted.Should().Be(0);
     }
 }
