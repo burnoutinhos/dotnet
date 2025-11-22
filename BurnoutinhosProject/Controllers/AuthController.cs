@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.DTO;
+﻿using System.Text.RegularExpressions;
+using BurnoutinhosProject.DTO;
 using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,13 @@ namespace BurnoutinhosProject.Controllers
         {
             var user = await _userService.GetAllUsersAsync();
             var existingUser = user.FirstOrDefault(u => u.Email == loginUser.Email && u.Password == loginUser.Password);
+
+            if (string.IsNullOrWhiteSpace(loginUser.Email) || 
+                !Regex.IsMatch(loginUser.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                return BadRequest($"O email '{loginUser.Email}' é inválido.");
+            }
+
             if (existingUser == null)
             {
                 return Unauthorized("Invalid email or password.");

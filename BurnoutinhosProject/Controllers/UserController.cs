@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.DTO;
+﻿using System.Text.RegularExpressions;
+using BurnoutinhosProject.DTO;
 using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -127,6 +128,13 @@ namespace BurnoutinhosProject.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<User>> CreateUser([FromBody] User user)
         {
+
+            if (string.IsNullOrWhiteSpace(user.Email) || 
+                !Regex.IsMatch(user.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                return BadRequest($"O email '{user.Email}' é inválido.");
+            }
+
             var createdUser = await _userService.CreateUserAsync(user);
             return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
         }
@@ -163,6 +171,12 @@ namespace BurnoutinhosProject.Controllers
             if (id != user.Id)
             {
                 return BadRequest("User ID mismatch.");
+            }
+
+            if (string.IsNullOrWhiteSpace(user.Email) || 
+                !Regex.IsMatch(user.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                return BadRequest($"O email '{user.Email}' é inválido.");
             }
             var updatedUser = await _userService.UpdateUserAsync(user);
             if (updatedUser == null)
