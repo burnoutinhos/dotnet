@@ -1,4 +1,5 @@
 ﻿using BurnoutinhosProject.Connection;
+using BurnoutinhosProject.DTO;
 using BurnoutinhosProject.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,31 @@ namespace BurnoutinhosProject.Repository
         public async Task<IEnumerable<Todo>> GetAllAsync()
         {
             return await _context.Todo.ToListAsync();
+        }
+
+        public async Task<PagedResponseDTO<Todo>> GetPagedAsync(PaginationParametersDTO parameters)
+        {
+            var totalRecords = await _context.Todo.CountAsync();
+            
+            var todos = await _context.Todo
+                .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize)
+                .ToListAsync();
+
+            return new PagedResponseDTO<Todo>(todos, totalRecords, parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<PagedResponseDTO<Todo>> GetPagedByUserIdAsync(int userId, PaginationParametersDTO parameters)
+        {
+            var totalRecords = await _context.Todo.CountAsync(t => t.UserId == userId);
+            
+            var todos = await _context.Todo
+                .Where(t => t.UserId == userId)
+                .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize)
+                .ToListAsync();
+
+            return new PagedResponseDTO<Todo>(todos, totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<Todo?> GetByIdAsync(int id)

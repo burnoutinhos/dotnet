@@ -1,4 +1,5 @@
 ﻿
+using BurnoutinhosProject.DTO;
 using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Repository;
 
@@ -16,6 +17,10 @@ namespace BurnoutinhosProject.Service
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _userRepository.GetAllAsync();
+        }
+        public async Task<PagedResponseDTO<User>> GetPagedUsersAsync(PaginationParametersDTO parameters)
+        {
+            return await _userRepository.GetPagedAsync(parameters);
         }
 
         public async Task<User?> GetUserByIdAsync(int id)

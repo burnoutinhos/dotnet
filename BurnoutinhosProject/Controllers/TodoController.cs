@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.DTO;
+using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,47 @@ namespace BurnoutinhosProject.Controllers
         {
             var todos = await _todoService.GetAllTodosAsync();
             return Ok(todos);
+        }
+
+        /// <summary>
+        /// Retorna tarefas cadastradas com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /todo/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 3,
+        ///       "totalRecords": 25,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de tarefas.</returns>
+        /// <response code="200">Retorna a lista paginada de tarefas.</response>
+        [HttpGet("paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<Todo>>> GetPagedTodos(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedTodos = await _todoService.GetPagedTodosAsync(parameters);
+            return Ok(pagedTodos);
         }
 
         /// <summary>
@@ -79,6 +121,49 @@ namespace BurnoutinhosProject.Controllers
         {
             var todos = await _todoService.GetTodosByUserIdAsync(userId);
             return Ok(todos);
+        }
+
+        /// <summary>
+        /// Retorna tarefas de um usuário específico com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /todo/user/1/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 2,
+        ///       "totalRecords": 15,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="userId">ID do usuário.</param>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de tarefas do usuário.</returns>
+        /// <response code="200">Retorna a lista paginada de tarefas do usuário.</response>
+        [HttpGet("user/{userId}/paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<Todo>>> GetPagedTodosByUserId(
+            int userId,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedTodos = await _todoService.GetPagedTodosByUserIdAsync(userId, parameters);
+            return Ok(pagedTodos);
         }
 
         /// <summary>

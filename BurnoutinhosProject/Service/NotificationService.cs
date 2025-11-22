@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.DTO;
+using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Repository;
 
 namespace BurnoutinhosProject.Service
@@ -15,6 +16,16 @@ namespace BurnoutinhosProject.Service
         public async Task<IEnumerable<Notification>> GetAllNotificationsAsync()
         {
             return await _notificationRepository.GetAllAsync();
+        }
+
+        public async Task<PagedResponseDTO<Notification>> GetPagedNotificationsAsync(PaginationParametersDTO parameters)
+        {
+            return await _notificationRepository.GetPagedAsync(parameters);
+        }
+
+        public async Task<PagedResponseDTO<Notification>> GetPagedNotificationsByUserIdAsync(int userId, PaginationParametersDTO parameters)
+        {
+            return await _notificationRepository.GetPagedByUserIdAsync(userId, parameters);
         }
 
         public async Task<IEnumerable<Notification>> GetNotificationsByUserIdAsync(int userId)

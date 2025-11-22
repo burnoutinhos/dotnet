@@ -42,7 +42,6 @@ public class UnitTest1
             Id = 1,
             Message = "Teste de notificação",
             UserId = 1,
-            IsRead = false,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -54,7 +53,6 @@ public class UnitTest1
         var fromDb = await _context.Notification.FindAsync(1);
         fromDb.Should().NotBeNull();
         fromDb!.Message.Should().Be("Teste de notificação");
-        fromDb.IsRead.Should().BeFalse();
     }
 
     [Fact]

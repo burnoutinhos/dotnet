@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.DTO;
+using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,90 @@ namespace BurnoutinhosProject.Controllers
         {
             var notifications = await _notificationService.GetAllNotificationsAsync();
             return Ok(notifications);
+        }
+
+        /// <summary>
+        /// Retorna notificações cadastradas com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /notification/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 5,
+        ///       "totalRecords": 45,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de notificações.</returns>
+        /// <response code="200">Retorna a lista paginada de notificações.</response>
+        [HttpGet("paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<Notification>>> GetPagedNotifications(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedNotifications = await _notificationService.GetPagedNotificationsAsync(parameters);
+            return Ok(pagedNotifications);
+        }
+
+        /// <summary>
+        /// Retorna notificações de um usuário específico com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /notification/user/1/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 3,
+        ///       "totalRecords": 22,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="userId">ID do usuário.</param>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de notificações do usuário.</returns>
+        /// <response code="200">Retorna a lista paginada de notificações do usuário.</response>
+        [HttpGet("user/{userId}/paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<Notification>>> GetPagedNotificationsByUserId(
+            int userId,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedNotifications = await _notificationService.GetPagedNotificationsByUserIdAsync(userId, parameters);
+            return Ok(pagedNotifications);
         }
 
         /// <summary>

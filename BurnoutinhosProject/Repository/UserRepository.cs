@@ -1,4 +1,5 @@
 ﻿using BurnoutinhosProject.Connection;
+using BurnoutinhosProject.DTO;
 using BurnoutinhosProject.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,18 @@ namespace BurnoutinhosProject.Repository
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await _context.User.ToListAsync();
+        }
+
+        public async Task<PagedResponseDTO<User>> GetPagedAsync(PaginationParametersDTO parameters)
+        {
+            var totalRecords = await _context.User.CountAsync();
+            
+            var users = await _context.User
+                .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize)
+                .ToListAsync();
+
+            return new PagedResponseDTO<User>(users, totalRecords, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<User?> GetByIdAsync(int id)

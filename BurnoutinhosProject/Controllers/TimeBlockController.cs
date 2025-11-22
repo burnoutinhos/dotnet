@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.DTO;
+using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,90 @@ namespace BurnoutinhosProject.Controllers
         {
             var timeBlocks = await _timeBlockService.GetAllAsync();
             return Ok(timeBlocks);
+        }
+
+        /// <summary>
+        /// Retorna blocos de tempo cadastrados com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /timeblock/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 3,
+        ///       "totalRecords": 25,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de blocos de tempo.</returns>
+        /// <response code="200">Retorna a lista paginada de blocos de tempo.</response>
+        [HttpGet("paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<TimeBlock>>> GetPagedTimeBlocks(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedTimeBlocks = await _timeBlockService.GetPagedAsync(parameters);
+            return Ok(pagedTimeBlocks);
+        }
+
+        /// <summary>
+        /// Retorna blocos de tempo de um usuário específico com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /timeblock/user/1/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 2,
+        ///       "totalRecords": 18,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="userId">ID do usuário.</param>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de blocos de tempo do usuário.</returns>
+        /// <response code="200">Retorna a lista paginada de blocos de tempo do usuário.</response>
+        [HttpGet("user/{userId}/paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<TimeBlock>>> GetPagedTimeBlocksByUserId(
+            int userId,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedTimeBlocks = await _timeBlockService.GetPagedByUserIdAsync(userId, parameters);
+            return Ok(pagedTimeBlocks);
         }
 
         /// <summary>

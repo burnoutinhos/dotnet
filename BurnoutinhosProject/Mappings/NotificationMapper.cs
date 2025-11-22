@@ -32,9 +32,6 @@ namespace BurnoutinhosProject.Mappings
                 .HasColumnName("UPDATED_AT")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .IsRequired();
-            builder.Property(n => n.IsRead)
-                .HasDefaultValue(false)
-                .IsRequired();
         }
     }
 }

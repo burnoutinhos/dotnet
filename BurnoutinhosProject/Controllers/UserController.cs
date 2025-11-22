@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.DTO;
+using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,47 @@ namespace BurnoutinhosProject.Controllers
         {
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
+        }
+
+        /// <summary>
+        /// Retorna usuários cadastrados com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /user/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 3,
+        ///       "totalRecords": 25,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de usuários.</returns>
+        /// <response code="200">Retorna a lista paginada de usuários.</response>
+        [HttpGet("paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<User>>> GetPagedUsers(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedUsers = await _userService.GetPagedUsersAsync(parameters);
+            return Ok(pagedUsers);
         }
 
         /// <summary>

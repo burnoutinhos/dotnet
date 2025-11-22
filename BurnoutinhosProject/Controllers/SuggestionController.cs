@@ -1,4 +1,5 @@
-﻿using BurnoutinhosProject.Models;
+﻿using BurnoutinhosProject.DTO;
+using BurnoutinhosProject.Models;
 using BurnoutinhosProject.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,90 @@ namespace BurnoutinhosProject.Controllers
         {
             var suggestions = await suggestionService.GetAllAsync();
             return Ok(suggestions);
+        }
+
+        /// <summary>
+        /// Retorna sugestões cadastradas com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /suggestion/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 2,
+        ///       "totalRecords": 15,
+        ///       "hasPrevious": false,
+        ///       "hasNext": true,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de sugestões.</returns>
+        /// <response code="200">Retorna a lista paginada de sugestões.</response>
+        [HttpGet("paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<Suggestion>>> GetPagedSuggestions(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedSuggestions = await suggestionService.GetPagedAsync(parameters);
+            return Ok(pagedSuggestions);
+        }
+
+        /// <summary>
+        /// Retorna sugestões de uma tarefa específica com paginação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     GET /suggestion/todo/1/paged?pageNumber=1&amp;pageSize=10
+        ///
+        /// Exemplo de resposta:
+        ///
+        ///     {
+        ///       "pageNumber": 1,
+        ///       "pageSize": 10,
+        ///       "totalPages": 1,
+        ///       "totalRecords": 8,
+        ///       "hasPrevious": false,
+        ///       "hasNext": false,
+        ///       "data": [...]
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="todoId">ID da tarefa.</param>
+        /// <param name="pageNumber">Número da página (padrão: 1).</param>
+        /// <param name="pageSize">Tamanho da página (padrão: 10, máximo: 50).</param>
+        /// <returns>Lista paginada de sugestões da tarefa.</returns>
+        /// <response code="200">Retorna a lista paginada de sugestões da tarefa.</response>
+        [HttpGet("todo/{todoId}/paged")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponseDTO<Suggestion>>> GetPagedSuggestionsByTodoId(
+            int todoId,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            var parameters = new PaginationParametersDTO
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            var pagedSuggestions = await suggestionService.GetPagedByTodoIdAsync(todoId, parameters);
+            return Ok(pagedSuggestions);
         }
 
         /// <summary>
